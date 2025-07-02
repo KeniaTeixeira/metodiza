@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export default function Timer({ DURATION = 1 * 60 }){
+export default function Timer({ DURATION, colorClass}: TimeProps){
+  const [reiniciar] = useState(DURATION);
   const [seconds, setSeconds] = useState(DURATION);
   const [executando, setExecutando] = useState(false);
   const [pausado, setPausado] = useState(false);
@@ -13,13 +14,14 @@ export default function Timer({ DURATION = 1 * 60 }){
         if (prev <= 1) {
           clearInterval(interval);
           setExecutando(false);
+          setSeconds(reiniciar);
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [executando]);
+  }, [executando, reiniciar]);
 
   const formatTime = (s: number) => {
     const min = Math.floor(s / 60);
@@ -47,7 +49,7 @@ return (
     <div className="flex flex-col items-center space-y-6 pt-15">
       {/* TEMPO */}
       <div className="rounded-full border-2 border-cyan-600 w-50 h-50 flex items-center justify-center">
-        <div className="text-6xl text-white">
+        <div className={`text-6xl ${colorClass}`}>
           {formatTime(seconds)}
         </div>
       </div>
@@ -69,7 +71,7 @@ return (
         )}
 
         {!executando && pausado && (
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center gap-3">
             <button
               onClick={handleStart}
               className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-2xl">Voltar
@@ -83,4 +85,9 @@ return (
       </div>
     </div>
   );
+}
+
+interface TimeProps{
+  DURATION: number;
+  colorClass: string;
 }
