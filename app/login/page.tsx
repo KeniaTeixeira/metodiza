@@ -1,40 +1,54 @@
-'use client';
-import Image from 'next/image';
-
+"use client";
+import Image from "next/image";
+import Link from "next/link";
 export default function Page() {
-  return (
-    <div className="">
-        <div className="">
-            <div className="">
-                <Image src="/logo.svg" alt="Logo" width={80} height={80} />
-                <h1 className="text-cyan-400">METODIZA</h1>
+    return (
+        <div className="flex min-h-screen bg-[#37373A] pt-10">
+            <div className="p-7 pl-10 space-y-6  w-[550px]">
+                <div className="flex flex-col items-center space-y-3">
+                    <Image src="/logo.svg" alt="Logo" width={100} height={100} />
+                    <h1 className="text-cyan-400 text-2xl">METODIZA</h1>
+                </div>
+
+                <div className="space-y-4">
+                    <div>
+                        <label className="block mb-1 text-white">Usuário ou e-mail</label>
+                        <input
+                            type="email"
+                            placeholder="Digite seu e-mail"
+                            className="w-full bg-white text-black px-4 py-2 rounded focus:outline-none"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block mb-1 text-white">Senha</label>
+                        <input
+                            type="password"
+                            placeholder="Digite sua senha"
+                            className="w-full bg-white text-black px-4 py-2 rounded focus:outline-none"
+                        />
+                    </div>
+                </div>
+
+                <div className="flex flex-col items-end text-sm text-gray-300">
+                    <h1 className="hover:underline cursor-pointer"> Esqueci minha senha </h1>
+                    <Link href="/cadastro">
+                        <h1 className="hover:underline cursor-pointer"> Criar conta </h1>
+                    </Link>
+                </div>
+
+                <div>
+                    <Link href="./app/notes">
+                    <button className="bg-cyan-500 hover:bg-cyan-600 cursor-pointer text-white py-2 px-8 text-base rounded-lg mx-auto block">
+                        ENTRAR
+                    </button>
+                    </Link>
+                </div>
             </div>
 
-            <div className="">
-                <h1 className="">Usuario ou e-mail</h1>
-                <input
-                type="email"
-                placeholder="wakawaka.."
-                className="bg-white text-black"
-                />
-
-                <h1 className="">Senha</h1>
-                <input
-                type="password"
-                placeholder="wili"
-                className="bg-white text-black"
-                />
-            </div>
-
-            <div className="flex flex-col text-gray-300">
-                <h1 className="">Esqueci minha senha</h1>
-                <h1 className="">Criar conta</h1>
-            </div>
-            
-            <div className="">
-                <button className="bg-cyan-500 hover:bg-cyan-600 text-white"> ENTRAR </button>
+            <div className="flex justify-center flex-grow">
+                <Image src="logo.svg" alt="Imagem" width={500} height={500} />
             </div>
         </div>
-    </div>
-  );
+    );
 }
