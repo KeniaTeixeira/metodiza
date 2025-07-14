@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+@theme {
+    --color-background: #121214;
+    --color-surface: #1e1e22;
+    --color-border: #2a2a2e;
+
+    --color-text-primary: #ededed;
+    --color-text-muted: #999999;
+
+    --color-accent-primary: #3bc9d9;
+    --color-accent-secondary: #d93b84;
+    --color-accent-tertiary: #695173;
+    --color-accent-focus: #37bbca;
+}
+
+.prose {
+    color: var(--color-text-primary);
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+    color: var(--color-text-muted);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+}
+
+.swal2-popup {
+    @apply bg-border text-text-primary;
+
+    .swal2-input {
+        @apply bg-white/10 border-0 outline-1 outline-transparent focus:!outline-text-primary transition-all duration-150;
+    }
+
+    .swal2-validation-message {
+        @apply bg-border;
+    }
+
+    .swal2-confirm {
+        @apply bg-accent-primary hover:brightness-90;
+    }
+
+    .swal2-cancel {
+        @apply bg-accent-secondary hover:brightness-90;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        visibility: hidden;
+    }
+    to {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.1s ease-out forwards;
+}
