@@ -12,6 +12,7 @@ export default function Page() {
     const [shortBreakTime, setShortBreakTime] = useState(10 * 60);
     const [longBreakTime, setLongBreakTime] = useState(15 * 60);
     const [tasks, setTasks] = useState<{ name: string; done: number; total: number }[]>([]);
+    const [taskToDelete, setTaskToDelete] = useState< number | null>(null);
 
     const getSetting = () => {
         switch (mode) {
@@ -25,8 +26,9 @@ export default function Page() {
     };
 
     const { duration, color } = getSetting();
+
     return (
-        <div className="w-full max-w-4xl mx-auto px-4">
+        <div className="w-full mx-auto px-4 overflow-y-auto">
             {/*Tempo dos pomos */}
             <div className="flex justify-center pt-10 space-x-10">
                 <h1
@@ -61,7 +63,7 @@ export default function Page() {
                         onClick={() => setShowTaskModal(true)}
                     />
                 </div>
-                <hr className="border-t border-cyan-300 w-full max-w-md mt-2" />
+                <hr className="border-t border-cyan-300 w-full max-w-lg mt-2" />
             </div>
             <Task 
                 isOpen={showTaskModal} 
@@ -75,7 +77,7 @@ export default function Page() {
                 tasks={tasks}
                 setTasks={setTasks}
             />
-            <div className="w-full flex flex-col items-center mt-4 space-y-4">
+            <div className="w-full flex flex-col items-center mt-4">
             {tasks.map((task, index) => (
 
             <TaskItem
@@ -90,10 +92,7 @@ export default function Page() {
                     setTasks(updated);
                 }
                 }}
-                onDelete={() => {
-                const updated = tasks.filter((_, i) => i !== index);
-                setTasks(updated);
-                }}
+                onDelete={() => setTaskToDelete(index)}
                 onEdit={({ name, total }) => {
                 const updated = [...tasks];
                 updated[index] = { ...updated[index], name, total };
@@ -101,9 +100,32 @@ export default function Page() {
                 }}
             />
             ))}
+
+            {/*Pra confirmar o delete */}
+            {taskToDelete !== null && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="bg-[#1f2127] p-6 rounded-xl shadow-xl w-full max-w-xs text-center">
+                        <h2 className="text-lg font-bold text-white mb-4">
+                        Tem certeza que deseja apagar <span className="text-cyan-300">"{tasks[taskToDelete!]?.name}"</span>?
+                        </h2>
+                        <div className="flex justify-center space-x-4">
+                            <button className="bg-cyan-500 hover:bg-cyan-600 text-black px-4 py-2 rounded" 
+                            onClick={() => setTaskToDelete(null)}>
+                            Cancelar </button>
+                            <button className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded"
+                            onClick={() => {
+                                const updated = tasks.filter((_, i) => i !== taskToDelete);
+                                setTasks(updated);
+                                setTaskToDelete(null);
+                            }}
+                            > Apagar </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             </div>
 
-        </div>
+    </div>
     );
 }
 
@@ -114,5 +136,4 @@ export default function Page() {
     mudar os icones
     colocar o icone da tarefa concluida quando for
     possibilitar a escolha da tarefa para a contagem
-    colocar um modal de confirmação para excluir a tarefa
 */}

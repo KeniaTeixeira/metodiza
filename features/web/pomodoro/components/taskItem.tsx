@@ -23,7 +23,7 @@ export default function TaskItem({
   };
 if (isEditing) {
   return (
-    <div className="w-1/2 text-white px-4 py-2 rounded-lg mb-2">
+    <div className="text-white px-4 py-2 rounded-lg mb-2">
       <input
         type="text"
         value={editaNome}
@@ -54,9 +54,9 @@ if (isEditing) {
 }
 
  return (
-  <div className="w-1/2">
-    <div className="flex justify-between items-center w-full px-4 py-2 text-white rounded-lg mb-2">
-      <div>
+  <div className="w-full max-w-lg mx-auto px-4">
+    <div className="flex items-center w-full px-4 py-2 text-white rounded-lg mb-2 space-x-4">
+      <div className="flex-1 min-w-0">
         <p className="font-medium">{name}</p>
         <p className="text-sm text-gray-400">{done}/{total} ciclos</p>
       </div>

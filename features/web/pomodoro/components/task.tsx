@@ -62,7 +62,7 @@ export default function Task({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center">
-      <div className="bg-[#3C3F51] text-white rounded-xl p-7 w-[400px] relative">
+      <div className="bg-[#1f2127] text-white rounded-xl p-7 w-[400px] relative">
         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">×</button>
         <h2 className="text-sm text-gray-400 mb-2">Editar Pomodoro</h2>
 
