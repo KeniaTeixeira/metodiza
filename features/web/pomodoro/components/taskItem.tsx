@@ -3,7 +3,8 @@ import { useState } from "react";
 
 export default function TaskItem({
   name, done, total,
-  onDelete, onIncrement, onEdit
+  onDelete, onIncrement, 
+  onEdit, onSelect, isSelected
 }: {
   name: string;
   done: number;
@@ -11,6 +12,8 @@ export default function TaskItem({
   onDelete?: () => void;
   onIncrement?: () => void;
   onEdit?: (updated: { name: string; total: number }) => void;
+  onSelect?: () => void;
+  isSelected?: Boolean;
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editaNome, seteditaNome] = useState(name);
@@ -53,35 +56,59 @@ if (isEditing) {
   );
 }
 
- return (
-  <div className="w-full max-w-lg mx-auto px-4">
+return (
+  <div
+    onClick={onSelect}
+    className={`w-full max-w-lg mx-auto px-4 cursor-pointer ${
+      isSelected ? "bg-[#1f2127]" : ""
+    }`}
+  >
     <div className="flex items-center w-full px-4 py-2 text-white rounded-lg mb-2 space-x-4">
       <div className="flex-1 min-w-0">
-        <p className="font-medium">{name}</p>
+            <p className="font-medium">
+              {name}
+              {done >= total && (
+                <span className="">  CONCLUIDO</span> //MUDAAAAR
+              )}
+              {isSelected && done < total && (
+                <span className=""> ESTUDANDO</span> //MUDAAAAR
+              )}
+            </p>
         <p className="text-sm text-gray-400">{done}/{total} ciclos</p>
       </div>
       <div className="flex space-x-2">
         {onIncrement && done < total && (
           <button
-            onClick={onIncrement}
+            onClick={(e) => {
+              e.stopPropagation(); 
+              onIncrement();
+            }}
             className="text-green-400 hover:text-green-300 text-sm"
-            title="Adicionar ciclo" >
+            title="Adicionar ciclo">
             +1CICLO
           </button>
         )}
         {onEdit && (
           <button
-            onClick={() => setIsEditing(true)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsEditing(true);
+            }}
             className="text-yellow-400 hover:text-yellow-300 text-sm"
-            title="Editar">
+            title="Editar"
+          >
             EDITAR
           </button>
         )}
         {onDelete && (
           <button
-            onClick={onDelete}
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete();
+            }}
             className="text-red-400 hover:text-red-300 text-sm"
-            title="Excluir">
+            title="Excluir"
+          >
             DEL
           </button>
         )}

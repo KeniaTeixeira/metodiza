@@ -13,6 +13,8 @@ export default function Page() {
     const [longBreakTime, setLongBreakTime] = useState(15 * 60);
     const [tasks, setTasks] = useState<{ name: string; done: number; total: number }[]>([]);
     const [taskToDelete, setTaskToDelete] = useState< number | null>(null);
+    const [selecionaTarefa, setSelecionaTarefa] = useState <number|null>(null);
+
 
     const getSetting = () => {
         switch (mode) {
@@ -48,7 +50,21 @@ export default function Page() {
                 </h1>
             </div>
 
-            <Timer key={mode} DURATION={duration} colorClass={color} />
+            <Timer
+            key={mode}
+            DURATION={duration}
+            colorClass={color}
+            onComplete={() => {
+                if (mode === "pomodoro" && selecionaTarefa !== null) {
+                const updated = [...tasks];
+                if (updated[selecionaTarefa].done < updated[selecionaTarefa].total) {
+                    updated[selecionaTarefa].done++;
+                    setTasks(updated);
+                }
+                }
+            }}
+            />
+
 
             {/* Parte pra adiconar tarefas*/}
             <div className="w-full mt-8 flex flex-col items-center">
@@ -98,6 +114,8 @@ export default function Page() {
                 updated[index] = { ...updated[index], name, total };
                 setTasks(updated);
                 }}
+                onSelect={() => setSelecionaTarefa(index)}
+                isSelected = {selecionaTarefa === index}
             />
             ))}
 
@@ -132,8 +150,6 @@ export default function Page() {
 
 
 {/**
-    contar os ciclos a cada tempo sozinho
-    mudar os icones
-    colocar o icone da tarefa concluida quando for
-    possibilitar a escolha da tarefa para a contagem
+    mudar os icones para os principais
+    Mudar o editar e apagar
 */}

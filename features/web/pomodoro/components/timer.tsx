@@ -1,31 +1,36 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef} from "react";
 
-export default function Timer({ DURATION, colorClass}: TimeProps){
-  const [reiniciar] = useState(DURATION);
+export default function Timer({ DURATION, colorClass, onComplete}: TimeProps){
   const [seconds, setSeconds] = useState(DURATION);
   const [executando, setExecutando] = useState(false);
   const [pausado, setPausado] = useState(false);
+  const intervalRef = useRef<number | null>(null);
+
 
   useEffect(() => {
-  setSeconds(DURATION);
+    setSeconds(DURATION);
   }, [DURATION]);
 
   useEffect(() => {
-    if (!executando) return;
-    const interval = setInterval(() => {
-      setSeconds((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          setExecutando(false);
-          setSeconds(reiniciar);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [executando, reiniciar]);
+    if (executando && seconds > 0) {
+      intervalRef.current = window.setInterval(() => {
+        setSeconds((prev) => prev - 1);
+      }, 1000);
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [executando]);
+
+  useEffect(() => { //chama onComplete uma única vez
+    if (seconds === 0 && executando) {
+      setExecutando(false);
+      setSeconds(DURATION);
+      onComplete?.();
+    }
+  }, [seconds, executando, onComplete]);
 
   const formatTime = (s: number) => {
     const min = Math.floor(s / 60);
@@ -94,4 +99,5 @@ return (
 interface TimeProps{
   DURATION: number;
   colorClass: string;
+  onComplete?: () => void;
 }
