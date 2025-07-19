@@ -7,7 +7,6 @@ export default function Timer({ DURATION, colorClass, onComplete}: TimeProps){
   const [pausado, setPausado] = useState(false);
   const intervalRef = useRef<number | null>(null);
 
-
   useEffect(() => {
     setSeconds(DURATION);
   }, [DURATION]);

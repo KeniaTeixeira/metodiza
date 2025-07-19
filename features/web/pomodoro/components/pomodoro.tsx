@@ -77,6 +77,7 @@ export default function Page() {
                         height={20} 
                         className="cursor-pointer"
                         onClick={() => setShowTaskModal(true)}
+                        title="Adicionar tarefas" 
                     />
                 </div>
                 <hr className="border-t border-cyan-300 w-full max-w-lg mt-2" />
@@ -93,9 +94,9 @@ export default function Page() {
                 tasks={tasks}
                 setTasks={setTasks}
             />
+
             <div className="w-full flex flex-col items-center mt-4">
             {tasks.map((task, index) => (
-
             <TaskItem
                 key={index}
                 name={task.name}
@@ -142,7 +143,6 @@ export default function Page() {
                 </div>
             )}
             </div>
-
     </div>
     );
 }
@@ -150,6 +150,6 @@ export default function Page() {
 
 
 {/**
-    mudar os icones para os principais
-    Mudar o editar e apagar
+    adicionar relatiorio
+    fazer parte da explicação
 */}

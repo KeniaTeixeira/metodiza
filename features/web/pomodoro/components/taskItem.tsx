@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function TaskItem({
   name, done, total,
@@ -65,13 +66,25 @@ return (
   >
     <div className="flex items-center w-full px-4 py-2 text-white rounded-lg mb-2 space-x-4">
       <div className="flex-1 min-w-0">
-            <p className="font-medium">
+            <p className="flex items-center space-x-2 font-medium">
               {name}
               {done >= total && (
-                <span className="">  CONCLUIDO</span> //MUDAAAAR
+              <Image 
+                  src="/svg/Concluido.svg" 
+                  alt="tarefa concluida" 
+                  width={17} 
+                  height={17} 
+                  className="cursor-pointer ml-1"
+                  />
               )}
               {isSelected && done < total && (
-                <span className=""> ESTUDANDO</span> //MUDAAAAR
+              <Image 
+                  src="/svg/naoConcluido.svg" 
+                  alt="tarefa nao concluida" 
+                  width={17.5} 
+                  height={17} 
+                  className="cursor-pointer ml-1"
+                  />
               )}
             </p>
         <p className="text-sm text-gray-400">{done}/{total} ciclos</p>
@@ -83,9 +96,14 @@ return (
               e.stopPropagation(); 
               onIncrement();
             }}
-            className="text-green-400 hover:text-green-300 text-sm"
             title="Adicionar ciclo">
-            +1CICLO
+            <Image 
+                  src="/svg/buttonaddCiclo.svg" 
+                  alt="Adicionar ciclo" 
+                  width={19} 
+                  height={19} 
+                  className="cursor-pointer ml-1"
+            />
           </button>
         )}
         {onEdit && (
@@ -94,10 +112,15 @@ return (
               e.stopPropagation();
               setIsEditing(true);
             }}
-            className="text-yellow-400 hover:text-yellow-300 text-sm"
             title="Editar"
           >
-            EDITAR
+            <Image 
+                  src="/svg/buttonEditar.svg" 
+                  alt="editar tarefa" 
+                  width={19} 
+                  height={19} 
+                  className="cursor-pointer ml-1"
+            />
           </button>
         )}
         {onDelete && (
@@ -106,10 +129,15 @@ return (
               e.stopPropagation();
               onDelete();
             }}
-            className="text-red-400 hover:text-red-300 text-sm"
             title="Excluir"
           >
-            DEL
+            <Image 
+                  src="/svg/buttonDelete.svg" 
+                  alt="apagar tarefa" 
+                  width={19} 
+                  height={19} 
+                  className="cursor-pointer ml-1"
+            />
           </button>
         )}
       </div>
